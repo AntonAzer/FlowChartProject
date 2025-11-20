@@ -1,4 +1,4 @@
-﻿#include "Input.h"
+#include "Input.h"
 #include "Output.h"
 #include <cctype>   // for isalpha أنا عاملها: للتحقق من أول حرف في اسم المتغير
 #include <sstream>  
@@ -71,9 +71,10 @@ string Input::GetVariable(Output* pO) const  // Get a valid variable name أنا
 		if (var.empty()) continue;
 
 		bool valid = isalpha(var[0]); 
-		for (char c : var)
-			if (!isalnum(c) && c != '_') valid = false; 
-
+		for (size_t i = 0; i < var.size(); i++) {
+			char c = var[i];
+			if (!isalnum(c) && c != '_') valid = false;
+		}
 		if (valid) break;  // بخلص التشيك
 		if (pO) pO->PrintMessage("Invalid variable name. Try again:"); // رسالة خطأ
 	}
@@ -112,7 +113,7 @@ string Input::GetCompOperator(Output* pO) const  // Get comparison operator أن
 		op = GetString(pO);
 		if (op == "==" || op == "!=" || op == "<" || op == "<=" || op == ">" || op == ">=")
 			break; // تم إدخال عامل مقارنة صحيح
-		if (pO) pO->PrintMessage("Invalid comparison operator. Try again:"); // رسالة خطأ
+		if (pO) pO->PrintMessage("Invalid comparison operator. Try again:"); // ايرور لليوزر
 	}
 
 	return op; 
