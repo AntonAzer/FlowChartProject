@@ -1,6 +1,6 @@
 #include "Input.h"
 #include "Output.h"
-#include <cctype>   // for isalpha أنا عاملها: للتحقق من أول حرف في اسم المتغير
+#include <cctype>  //I need it in GETVARIABLE()
 #include <sstream>  
 #include <iostream> 
 
@@ -97,7 +97,7 @@ char Input::GetArithOperator(Output* pO) const  // Get arithmetic operator أن�
 			op = s[0]; // تم إدخال عامل صحيح
 			break;
 		}
-		if (pO) pO->PrintMessage("Invalid operator. Try again:"); // رسالة خطأ
+		if (pO) pO->PrintMessage("Invalid operator. Try again:"); // ايرور لليوزر
 	}
 
 	return op; // إرجاع العامل
@@ -152,6 +152,7 @@ ActionType Input::GetUserAction() const// I did NOT get it without help (HARD)
 	}
 }
 
-Input::~Input()  // Destructor أنا عاملها مفيش ميموري افضيها هنا
+Input::~Input()  // Destructor مفيهاش محتوي
 {
 }
+
