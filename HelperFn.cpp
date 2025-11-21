@@ -1,4 +1,3 @@
-
 #include "HelperFn.h"
 
 bool IsValue (string input)
@@ -63,3 +62,4 @@ OpType ValueOrVariable (string input)
 	return INVALID_OP; //if not value or variable 
 
 }
+
