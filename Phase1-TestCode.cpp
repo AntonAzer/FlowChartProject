@@ -1,4 +1,4 @@
-﻿
+
 #include "HelperFn.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
@@ -39,7 +39,7 @@ int main()
 	if (IsValue(s1))	pOut->PrintMessage("IsValue: TRUE");
 	else   pOut->PrintMessage("IsValue: FALSE");
 
-	Sleep(500); // البرنامج يفريز نص
+	Sleep(1500); // البرنامج يفريزثانيه و نص
 
 
 	// 2) Test IsVariable
@@ -52,7 +52,7 @@ int main()
 	else
 		pOut->PrintMessage("IsVariable: FALSE");
 
-	Sleep(500);
+	Sleep(1500);
 
 
 	// 3) Test ValueOrVariable
@@ -76,7 +76,7 @@ int main()
 	}
 
 
-	Sleep(500);
+	Sleep(1500);
 
 
 
@@ -238,16 +238,32 @@ int main()
 	pOut->PrintMessage("Testing Input ability to read strings, values, variables and operators");
 
 	////////////
-	//TODO: Add code here to 
+	//DONE: Add code here to 
 	// 1- Read a (double value) from the user and print it
 	// 2- Read a (variable name) from the user and print it
 	// 3- Read an (arithmatic operator) from the user and print it
 	// 4- Read a (comparison operator) from the user and print it
 	////////////
+
+	// 1- Read a (double value) from the user and print it
 	double value = pIn->GetValue(pOut);   // get value and printing it
 	pOut->PrintMessage("Value entered: " + to_string(value));
 	// Tricky one to put double with words
-
+	double d = pIn->GetValue(pOut);
+	pOut->PrintMessage("Double value = " + to_string(d));
+	Sleep(1500);
+	// 2- Read a (variable name) from the user and print it
+	string var = pIn->GetVariable(pOut);
+	pOut->PrintMessage("Variable name = " + var);
+	Sleep(1500);
+	// 3- Read an (arithmatic operator) from the user and print it
+	char arOp = pIn->GetArithOperator(pOut);
+	pOut->PrintMessage(string("Arithmetic operator = ") + arOp);
+	Sleep(800);
+	// 4- Read a (comparison operator) from the user and print it
+	string comp = pIn->GetCompOperator(pOut);
+	pOut->PrintMessage("Comparison operator = " + comp);
+	Sleep(1500);
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
 
@@ -259,7 +275,7 @@ int main()
 	ActionType ActType;
 
 	////////////
-	//TODO:  You must add a case for EACH action in the following (switch case)
+	//DONE:  You must add a case for EACH action in the following (switch case)
 	////////////
 
 	do
