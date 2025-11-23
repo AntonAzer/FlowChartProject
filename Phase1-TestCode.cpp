@@ -152,7 +152,7 @@ int main()
 	////////////
 	//DONE: Add code to draw different (Conditional) statements here in ALL STATES
 	////////////
-	pOut->DrawCond(P, 90, 70, "conditionText", false);
+	pOut->DrawCond(P, 90, 70, "x>y", false);
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
@@ -164,8 +164,8 @@ int main()
 	////////////
 	//DONE: Add code to draw different (Read) statements here in ALL STATES
 	////////////
-	pOut->DrawReadandWrite(20, 90, 100, "ANY");
-
+	//pOut->DrawReadandWrite(P, 120, 50, "read x");
+	pOut->DrawReadandWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "read x");
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
@@ -177,7 +177,12 @@ int main()
 	////////////
 	//DONE: Add code to draw different (Write) statements here in ALL STATES
 	////////////
-	pOut->DrawReadandWrite(100, 200, 120, "x = 5");
+	pOut->DrawReadandWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Read x");
+	pIn->GetPointClicked(P);	//Wait for any click
+	pOut->ClearDrawArea();
+	pOut->DrawReadandWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "write x");
+	pIn->GetPointClicked(P);	//Wait for any click
+	pOut->ClearDrawArea();
 	// DrawReadandWrite(Point Left, int width, int height, string Text, bool Selected = false); شكل الداله   
 
 	pIn->GetPointClicked(P);	//Wait for any click
@@ -191,7 +196,18 @@ int main()
 	////////////
 	//DONE: Add code to draw different (Start & End) statements here  in ALL STATES
 	////////////
-	pOut->DrawStartorEnd(P, 80, 120, "Start", false);
+	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Start", false);
+	pIn->GetPointClicked(P);	//Wait for any click
+	pOut->ClearDrawArea();
+	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Start", true);
+	pIn->GetPointClicked(P);	//Wait for any click
+	pOut->ClearDrawArea();
+	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "End", false);
+	pIn->GetPointClicked(P);	//Wait for any click
+	pOut->ClearDrawArea();
+	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "End", true);
+	pIn->GetPointClicked(P);	//Wait for any click
+	pOut->ClearDrawArea();
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
