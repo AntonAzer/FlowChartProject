@@ -152,7 +152,7 @@ int main()
 	////////////
 	//DONE: Add code to draw different (Conditional) statements here in ALL STATES
 	////////////
-	pOut->DrawCond(P, 90, 70, "x>y", false);
+	pOut->DrawCondtionalStat(P, 90, 70, "x>y", false);
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
@@ -165,7 +165,7 @@ int main()
 	//DONE: Add code to draw different (Read) statements here in ALL STATES
 	////////////
 	//pOut->DrawReadandWrite(P, 120, 50, "read x");
-	pOut->DrawReadandWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "read x");
+	pOut->DrawReadStat(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "read x");
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
@@ -177,10 +177,10 @@ int main()
 	////////////
 	//DONE: Add code to draw different (Write) statements here in ALL STATES
 	////////////
-	pOut->DrawReadandWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Read x");
+	pOut->DrawWriteStat(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Read x");
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
-	pOut->DrawReadandWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "write x");
+	pOut->DrawReadStat(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "write x");
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
 	// DrawReadandWrite(Point Left, int width, int height, string Text, bool Selected = false); شكل الداله   
@@ -196,16 +196,16 @@ int main()
 	////////////
 	//DONE: Add code to draw different (Start & End) statements here  in ALL STATES
 	////////////
-	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Start", false);
+	pOut->DrawStart(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Start", false);
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
-	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Start", true);
+	pOut->DrawStart(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Start", true);
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
-	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "End", false);
+	pOut->DrawEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "End", false);
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
-	pOut->DrawStartorEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "End", true);
+	pOut->DrawEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "End", true);
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
 
@@ -222,6 +222,12 @@ int main()
 	////////////
 	pOut->DrawConnector(P, 100, false);
 
+	// I added this 4 lines to test the connector in conditional statement 
+	pIn->GetPointClicked(P);
+	pOut->ClearDrawArea();
+	pOut->PrintMessage("Drawing Connector in case cond statement, Click to continue");
+	pOut->DrawCondConnector(P, 100, false, false);
+	// Iam stopped here you can remove this test if you want
 
 
 	pIn->GetPointClicked(P);	//Wait for any click
@@ -409,19 +415,18 @@ int main()
 			// It was so boring ,GOOD BYE
 
 		}
-	}
-		while (ActType != EXIT);
-	
-
-		/// Exiting
-		pOut->PrintMessage("Action: EXIT, test is finished, click anywhere to exit");
-		pIn->GetPointClicked(P);
+	} while (ActType != EXIT);
 
 
-		delete pIn;
-		delete pOut;
-		return 0;
-	}
+	/// Exiting
+	pOut->PrintMessage("Action: EXIT, test is finished, click anywhere to exit");
+	pIn->GetPointClicked(P);
+
+
+	delete pIn;
+	delete pOut;
+	return 0;
+}
 
 
 
