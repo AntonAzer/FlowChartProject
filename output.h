@@ -15,7 +15,7 @@ public:
 
 	void CreateStatusBar(); //Creates status bar
 
-	//TODO: Complete the following 2 functions
+	//DONE: Complete the following 2 functions
 	void CreateDesignToolBar();	//Tool bar of the design mode
 	void CreateSimulationToolBar(); //Tool bar of the simulation mode
 
@@ -27,22 +27,25 @@ public:
 	void DrawString(const int, const int, const string);  //Writes a string in the specified location
 
 	// -- Statements Drawing Functions
-	void DrawAssign(Point Left, int width, int height, string Text, bool Selected=false);
+	void DrawAssign(Point Left, int width, int height, string Text, bool Selected = false);
 
 
-	//TODO: Add similar functions for drawing all other statements.
+	//DONE: Add similar functions for drawing all other statements.
 	//		e.g. DrawDeclareStat(.....), DrawCondtionalStat(......), DrawStart(......), DrawEnd(.......), ...etc
 	//		Decide the parameters that should be passed to each of them
 
 
-	void DrawReadandWrite(Point Left, int width, int height, string Text, bool Selected = false);
-	void DrawCond(Point Left, int width, int height, string Text, bool Selected = false);
-	void DrawStartorEnd(Point Left, int width, int height, string Text, bool Selected = false);
-	void DrawDeclareandInitialize(Point Left, int width, int height, string Text, bool Selected = false);
+	void DrawReadStat(Point Left, int width, int height, string Text, bool Selected = false);
+	void DrawWriteStat(Point Left, int width, int height, string Text, bool Selected = false);
+	void DrawCondtionalStat(Point Left, int width, int height, string Text, bool Selected = false);
+	void DrawStart(Point Left, int width, int height, string Text, bool Selected = false);
+	void DrawEnd(Point Left, int width, int height, string Text, bool Selected = false);
+	void DrawDeclareStat(Point Left, int width, int height, string Text, bool Selected = false);
 
 
 	//TODO: Add DrawConnector function
 	void DrawConnector(Point Start, int length, bool Selected = false);
+	void DrawCondConnector(Point Start, int length,  bool dir, bool Selected = false );
 
 	~Output();
 };
