@@ -22,6 +22,7 @@ public:
 	void ClearStatusBar();	//Clears the status bar
 	void ClearDrawArea();	//Clears the drawing area
 	void ClearOutputBar(); //Clears the Output bar
+	void ClearToolbar();
 	
 	void PrintMessage(string msg);	//Prints a message on Status bar
 	void DrawString(const int, const int, const string);  //Writes a string in the specified location
@@ -37,14 +38,14 @@ public:
 
 	void DrawReadStat(Point Left, int width, int height, string Text, bool Selected = false);
 	void DrawWriteStat(Point Left, int width, int height, string Text, bool Selected = false);
-	void DrawCondtionalStat(Point Left, int width, int height, string Text, bool Selected = false);
+	void DrawCondtionalStat(Point Top, int width, string Text, bool Selected = false);
 	void DrawStart(Point Left, int width, int height, string Text, bool Selected = false);
 	void DrawEnd(Point Left, int width, int height, string Text, bool Selected = false);
 	void DrawDeclareStat(Point Left, int width, int height, string Text, bool Selected = false);
-	void ClearToolbar();
+
 
 	//TODO: Add DrawConnector function
-	void DrawConnector(Point Start, int length, bool Selected = false);
+	void DrawStraightConnector(Point Start, Point End, bool Selected = false);
 	void DrawCondConnector(Point Start, int length,  bool dir, bool Selected = false );
 
 	~Output();
