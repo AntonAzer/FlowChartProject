@@ -111,23 +111,20 @@ void Output::CreateDesignToolBar() //Draws the Design Menu
 //TODO: Complete this function
 void Output::CreateSimulationToolBar() //Draws the Simulation Menu
 {
-	 
 	UI.AppMode = SIMULATION;	//Simulation Mode
 	///DONE: add code to create the simulation tool bar
-		
-	ClearToolbar();//Clear old toolbar first
+
 	string MenuItemImages[SIM_ITM_CNT];
 
 	MenuItemImages[ITM_VALIDATE] = "images\\validate.jpg";
 	MenuItemImages[ITM_RUN] = "images\\run.jpg";
 	MenuItemImages[ITM_DSN_MODE] = "images\\DSN_mode.jpg";
 	MenuItemImages[ITM_EXIT_SIM] = "images\\Exit.jpg";
-	for (int i = 0; i < SIM_ITM_CNT; i++)
-		pWind->DrawImage(MenuItemImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 
-	//Draw line under toolbar
+	//Draw a line under the toolbar
 	pWind->SetPen(RED, 2);
 	pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -153,7 +150,15 @@ void Output::ClearOutputBar()
 	pWind->SetBrush(LIGHTBLUE);
 	pWind->DrawRectangle(UI.DrawingAreaWidth, UI.ToolBarHeight, UI.width, UI.height - UI.StatusBarHeight);
 }
+////////////////////////////////////////////////////////////////////////////
+void Output::ClearToolbar()
+{
+	pWind->SetPen(RED, 2);
+	pWind->SetBrush(WHITE);
+	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight );
+}
 //////////////////////////////////////////////////////////////////////////////////////////
+
 void Output::PrintMessage(string msg)	//Prints a message on status bar
 {
 	ClearStatusBar();	//First clear the status bar
@@ -243,7 +248,7 @@ void Output::DrawWriteStat(Point Left, int width, int height, string Text, bool 
 	pWind->SetPen(BLACK, 2);
 	pWind->DrawString(Left.x + width / 4, Left.y + height / 3, Text);
 }
-void Output::DrawCondtionalStat(Point Left, int width, int height, string Text, bool Selected)
+void Output::DrawCondtionalStat(Point Top, int width, string Text, bool Selected)
 {
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);
@@ -253,17 +258,17 @@ void Output::DrawCondtionalStat(Point Left, int width, int height, string Text, 
 	int X[4], Y[4];
 
 	// Diamond vertices
-	X[0] = Left.x;               Y[0] = Left.y;               // Top
-	X[1] = Left.x + width / 2;   Y[1] = Left.y + height / 2;  // Right
-	X[2] = Left.x;               Y[2] = Left.y + height;      // Bottom
-	X[3] = Left.x - width / 2;   Y[3] = Left.y + height / 2;  // Left
+	X[0] = Top.x;               Y[0] = Top.y;               // Top
+	X[1] = Top.x + width / 2;   Y[1] = Top.y + width / 2;  // Right
+	X[2] = Top.x;               Y[2] = Top.y + width;      // Bottom
+	X[3] = Top.x - width / 2;   Y[3] = Top.y + width / 2;  // Left
 
 	// Draw diamond
 	pWind->DrawPolygon(X, Y, 4);
 
 	// Print condition text
 	pWind->SetPen(BLACK, 2);
-	pWind->DrawString(Left.x - width / 4, Left.y + height / 2 - 5, Text);
+	pWind->DrawString(Top.x - width / 4, Top.y + width / 4 , Text);
 }
 
 void Output::DrawStart(Point Center, int width, int height, string Text, bool Selected)
@@ -325,17 +330,13 @@ void Output::DrawDeclareStat(Point Left, int width, int height, string Text, boo
 
 //DONE: Add DrawConnector function
 
-void Output::DrawConnector(Point Start, int length, bool Selected)
+void Output::DrawStraightConnector(Point Start, Point End, bool Selected)
 {
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);
 	else
 		pWind->SetPen(UI.DrawColor, 3);
 
-	// Line end point (straight down)
-	Point End;
-	End.x = Start.x;
-	End.y = Start.y + length;
 
 	// Draw the vertical line
 	pWind->DrawLine(Start.x, Start.y, End.x, End.y);
@@ -350,43 +351,56 @@ void Output::DrawConnector(Point Start, int length, bool Selected)
 	pWind->DrawPolygon(X, Y, 3);
 }
 
-void Output::DrawCondConnector(Point Start, int length, bool dir, bool Selected )// dir:Right(1),Left(0) 
+
+void Output::DrawCondConnector(Point Start, int length, bool dir, bool Selected)
+// dir:Right(1),Left(0) 
 // length here represent thr vertical line , the hor.line constant and equal 100 here
 {
+	// Set pen color based on selection status (highlight or normal draw color)
 	if (Selected)
 		pWind->SetPen(UI.HighlightColor, 3);
 	else
 		pWind->SetPen(UI.DrawColor, 3);
 
-	if (dir)  // draw right connector
-	{
-		// Line end point (horizontal right)
-		Point End;
-		End.x = Start.x + 100;
-		End.y = Start.y ;
+	Point HorEnd; // End point of the horizontal segment
 
-		// Draw the horizontal line
-		pWind->DrawLine(Start.x, Start.y, End.x, End.y);
-		DrawConnector(End, length, Selected);
+	if (dir)  // Draw the Right connector 
+	{
+		// 1. Calculate the end point of the horizontal line 
+		HorEnd.x = Start.x + 100;
+		HorEnd.y = Start.y;
+
+		// 2. Draw the horizontal segment
+		pWind->DrawLine(Start.x, Start.y, HorEnd.x, HorEnd.y);
+
+		// 3. Calculate the final end point (vertical segment down by 'length')
+		Point FinalEnd;
+		FinalEnd.x = HorEnd.x;
+		FinalEnd.y = HorEnd.y + length;
+
+		// 4. Draw the vertical segment and the arrowhead (using the general straight connector)
+		// Note: Assumes DrawStraightConnector is available and handles the final arrowhead.
+		DrawStraightConnector(HorEnd, FinalEnd, Selected);
 	}
-	else // draw left connector
+	else // Draw the Left connector 
 	{
-		// Line end point (horizontal left)
-		Point End;
-		End.x = Start.x - 80;
-		End.y = Start.y;
+		// 1. Calculate the end point of the horizontal line 
+		HorEnd.x = Start.x - 80;
+		HorEnd.y = Start.y;
 
-		// Draw the horizontal line
-		pWind->DrawLine(Start.x, Start.y, End.x, End.y);
-		DrawConnector(End, length, Selected);
+		// 2. Draw the horizontal segment
+		pWind->DrawLine(Start.x, Start.y, HorEnd.x, HorEnd.y);
+
+		// 3. Calculate the final end point (vertical segment down by 'length')
+		Point FinalEnd;
+		FinalEnd.x = HorEnd.x;
+		FinalEnd.y = HorEnd.y + length;
+
+		// 4. Draw the vertical segment and the arrowhead
+		DrawStraightConnector(HorEnd, FinalEnd, Selected);
 	}
 }
-void Output::ClearToolbar()
-{
-	pWind->SetPen(RED, 2);
-	pWind->SetBrush(WHITE);
-	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
-}
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -394,4 +408,3 @@ Output::~Output()
 {
 	delete pWind;
 }
-
